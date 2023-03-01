@@ -1,3 +1,3 @@
 # Setup file template to upload data to MongoDB Atlas
-mongoimport --uri "mongodb+srv://sanchittewari:9L1Kj0KIxE2i3Y1R@cluster0.p4dsq.mongodb.net/qkart?retryWrites=true&w=majority" --drop --collection users --file data/export_qkart_users.json
-mongoimport --uri "mongodb+srv://sanchittewari:9L1Kj0KIxE2i3Y1R@cluster0.p4dsq.mongodb.net/qkart?retryWrites=true&w=majority" --drop --collection products --file data/export_qkart_products.json
+mongoimport --uri "mongodb://admin:cowgivesmilk12345@ac-d6c2hn5-shard-00-00.saxdsyn.mongodb.net:27017,ac-d6c2hn5-shard-00-01.saxdsyn.mongodb.net:27017,ac-d6c2hn5-shard-00-02.saxdsyn.mongodb.net:27017/qkart?ssl=true&replicaSet=atlas-cwnzjt-shard-0&authSource=admin&retryWrites=true&w=majority" --drop --collection users --file data/export_qkart_users.json
+mongoimport --uri "mongodb://admin:cowgivesmilk12345@ac-d6c2hn5-shard-00-00.saxdsyn.mongodb.net:27017,ac-d6c2hn5-shard-00-01.saxdsyn.mongodb.net:27017,ac-d6c2hn5-shard-00-02.saxdsyn.mongodb.net:27017/qkart?ssl=true&replicaSet=atlas-cwnzjt-shard-0&authSource=admin&retryWrites=true&w=majority" --drop --collection products --file data/export_qkart_products.json
