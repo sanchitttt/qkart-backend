@@ -51,58 +51,89 @@ const { userService } = require("../services");
  */
 const getUser = catchAsync(async (request, response) => {
   try {
-    const {q} = request.query;
-    const {userId} = request.params;
-    if(q){
-      const {email} = request.user;
+    const { q } = request.query;
+    const { userId } = request.params;
+    if (q) {
+      const { email } = request.user;
       const user = await userService.getUserById(userId);
       const result = await userService.getUserAddressById(userId);
-      const {address} = result;
-      if(email!==user.email){
+      const { address } = result;
+      if (email !== user.email) {
         response.sendStatus(403)
       }
-      response.json({"address":address});
+      response.json({ "address": address });
     }
-    else{
-      const {userId} = request.params;
-      const {email} = request.user;
+    else {
+      const { userId } = request.params;
+      const { email } = request.user;
       const result = await userService.getUserById(userId);
-      if(email!==result.email){
+      if (email !== result.email) {
         response.sendStatus(403)
       }
-      else{
+      else {
         response.json(result);
       }
     }
 
-  
+
   } catch (error) {
     if (error.statusCode === 400) {
-      throw new ApiError(error.statusCode,error.message)
+      throw new ApiError(error.statusCode, error.message)
     }
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR)
   }
 });
 
-const setAddress = async (req,res) => {
-  try{
-    const {userId} = req.params; 
-    const {address} = req.body;
-    const result = await userService.setAddress(userId,address);
+const setAddress = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { address } = req.body;
+    const result = await userService.setAddress(userId, address);
     res.status(httpStatus.OK).json(result);
   }
-  catch(error){
-    if(error.statusCode===400){
-      throw new ApiError(error.statusCode,error.message);
+  catch (error) {
+    if (error.statusCode === 400) {
+      throw new ApiError(error.statusCode, error.message);
     }
-    else{
-      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR,"Internal Server Error");
+    else {
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error");
     }
   }
-  
+
+}
+
+const getUserAddress = async (req, res) => {
+  try {
+    res.json({ "address": req.user.address })
+  }
+  catch (error) {
+  }
+}
+
+const addAddress = async (req, res) => {
+  try {
+    const { newAddress } = req.body;
+    await userService.addAddress(req.user._id, newAddress);
+    res.end();
+  }
+  catch (error) {
+  }
+}
+
+const deleteAddress = async (req, res) => {
+  try {
+    const { index } = req.params;
+    await userService.deleteAddress(req.user._id, index);
+    res.end();
+  }
+  catch (error) {
+  }
 }
 
 module.exports = {
   getUser,
-  setAddress
+  setAddress,
+  getUserAddress,
+  addAddress,
+  deleteAddress
 };

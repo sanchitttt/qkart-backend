@@ -186,6 +186,7 @@ const deleteProductFromCart = async (user, productId) => {
 };
 
 const checkout = async (user) => {
+  console.log('reached');
   const userCart = await Cart.findOne({ "email": user.email });
   const walletMoney = user.walletMoney;
     if (!userCart) {
@@ -194,10 +195,6 @@ const checkout = async (user) => {
   const cartItemsLength = userCart.cartItems.length;
     if (cartItemsLength === 0) {
     throw new ApiError(httpStatus.BAD_REQUEST,"No products found in user cart");
-  }
-  const nonDefaultAddress = user.hasSetNonDefaultAddress();
-  if (!nonDefaultAddress) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "No address found");
   }
   let totalAmount = 0;
   userCart.cartItems.forEach((item) => {

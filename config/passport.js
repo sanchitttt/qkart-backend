@@ -27,20 +27,20 @@ const jwtOptions = {
  */
 const jwtVerify = async (payload, done) => {
   try {
-    if(payload.type!==tokenTypes.ACCESS){
+    if (payload.type !== tokenTypes.ACCESS) {
       return done("Invalid Token Type", false);
     }
-    else{
-      const user = await User.findOne({"_id":payload.userId});
-      if(!user){
-        return done(null,false)
+    else {
+      const user = await User.findOne({ "_id": payload.userId });
+      if (!user) {
+        return done(null, false)
       }
-      else{
-        return done(null,user);
+      else {
+        return done(null, user);
       }
     }
   } catch (error) {
-    return done(error,false)
+    return done(error, false)
   }
 };
 

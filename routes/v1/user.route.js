@@ -7,8 +7,12 @@ const router = express.Router();
 
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS - Implement a route definition for `/v1/users/:userId`
 
+router.get("/getAddress", auth, userController.getUserAddress);
+router.post("/addAddress", auth, userController.addAddress);
+router.delete("/deleteAddress/:index", auth, userController.deleteAddress);
+router.get("/:userId", auth, validate(userValidation.getUser), userController.getUser);
+router.put("/:userId", auth, validate(userValidation.putUser), userController.setAddress);
 
-router.get("/:userId", auth, validate(userValidation.getUser) , userController.getUser);
-router.put("/:userId", auth, validate(userValidation.putUser) , userController.setAddress);
+
 
 module.exports = router;

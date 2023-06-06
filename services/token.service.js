@@ -17,13 +17,13 @@ const { tokenTypes } = require("../config/tokens");
  * @returns {string}
  */
 const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
-    try {
-      const payLoad = { "userId": userId, "type": type, "exp": expires };
-      const token = jwt.sign(payLoad,secret);
-      return token;
-    } catch (error) {
-      throw error;
-    }
+  try {
+    const payLoad = { "userId": userId, "type": type, "exp": expires };
+    const token = jwt.sign(payLoad, secret);
+    return token;
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -41,22 +41,24 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
  *          "expires": "2021-01-30T13:51:19.036Z"
  * }
  */
-const generateAuthTokens =  (userId) => {
+const generateAuthTokens = (userId) => {
   const payLoad = userId;
-  const expires= config.jwt.accessExpirationMinutes;
-  const type= tokenTypes.ACCESS;
-  const token = generateToken(payLoad,Math.floor(Date.now() / 1000) + config.jwt.accessExpirationMinutes * 60,type);
+  const expires = config.jwt.accessExpirationMinutes;
+  const type = tokenTypes.ACCESS;
+  const token = generateToken(payLoad, Math.floor(Date.now() / 1000) + config.jwt.accessExpirationMinutes * 60, type);
   let currentDate = new Date();
   currentDate.setSeconds(currentDate.getSeconds() + expires);
   let currentDateISO = currentDate.toISOString();
   const resultDate = new Date(currentDateISO);
-  const result = 
-  { "access":
-   {
-    "token":token,
-    "expires":resultDate
-   }
- }
+  const result =
+  {
+    "access":
+    {
+      "token": token,
+      "expires": resultDate
+    }
+  }
+  console.log(result);
   return result;
 };
 

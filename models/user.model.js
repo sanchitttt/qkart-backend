@@ -40,10 +40,10 @@ const userSchema = mongoose.Schema(
       default: config.default_wallet_money
     },
     address: {
-      type: String,
-      default: config.default_address,
+      type: [],
+      default: [],
       required: false,
-      trim: false
+      trim: true
     },
   },
   // Create createdAt and updatedAt fields automatically
@@ -63,18 +63,18 @@ userSchema.statics.isEmailTaken = async function (email) {
 };
 
 
-userSchema.pre('save', async function (next){ 
+userSchema.pre('save', async function (next) {
   try {
-   const user = this;
-   if(user.isModified('password')){
-     const salt = await bcrypt.genSalt(10);
-     const hashedPassword = await bcrypt.hash(user.password,salt);
-     user.password = hashedPassword;
-     next();
-   }
-   else{
-     next()
-   }
+    const user = this;
+    if (user.isModified('password')) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(user.password, salt);
+      user.password = hashedPassword;
+      next();
+    }
+    else {
+      next()
+    }
   } catch (error) {
     next(error);
   }
@@ -87,7 +87,7 @@ userSchema.pre('save', async function (next){
  * @returns {Promise<boolean>}
  */
 userSchema.methods.isPasswordMatch = async function (password) {
-   return bcrypt.compare(password,this.password);
+  return bcrypt.compare(password, this.password);
 };
 
 userSchema.methods.hasSetNonDefaultAddress = function () {

@@ -22,7 +22,7 @@ router.put(
   cartController.updateProductInCart
 );
 
-router.put(
+router.post(
   "/checkout",
   auth,
   cartController.checkout

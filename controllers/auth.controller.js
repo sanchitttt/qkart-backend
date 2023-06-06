@@ -40,6 +40,7 @@ const register = catchAsync(async (req, res) => {
     const result = { user: newUser,"tokens":token};
     res.status(201).json(result);
   } catch (error) {
+    console.log(error)
     if(error.statusCode===200){
       throw new ApiError(error.statusCode, error.message)
     }
@@ -85,6 +86,7 @@ const login = catchAsync(async (req, res) => {
     const payload = user._id;
     const token = await tokenService.generateAuthTokens(payload);
     const result = { user: user,"tokens":token};
+    console.log(user)
     res.status(200).json(result);
   } catch (error) {
       throw new ApiError(error.statusCode,error.message)

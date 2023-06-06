@@ -9,7 +9,7 @@ const { password } = require("./custom.validation");
  */
 const register = {
     body : Joi.object().keys({
-      email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+      email: Joi.string().email().required(),
       password:Joi.string().custom(password,"Bad password").required(),
       name:Joi.string()
     })

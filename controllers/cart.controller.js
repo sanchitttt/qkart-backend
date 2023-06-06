@@ -54,6 +54,7 @@ const getCart = catchAsync(async (req, res) => {
  */
 const addProductToCart = catchAsync(async (req, res) => {
   try {
+    console.log('reached')
     const { productId, quantity } = req.body;
     const cart = await cartService.addProductToCart(req.user,productId,quantity);
     // console.log(cart);
