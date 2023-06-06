@@ -17,7 +17,7 @@ const ApiError = require("../utils/ApiError");
 const loginUserWithEmailAndPassword = async (email, password) => {
    const user = await userService.getUserByEmail(email);
    if(!user){
-     throw new ApiError(httpStatus.UNAUTHORIZED, "Email already taken");
+     throw new ApiError(httpStatus.UNAUTHORIZED, "User doesnt exist");
    }
    const passwordMatch = await user.isPasswordMatch(password);
    if(!passwordMatch){
